@@ -21,7 +21,8 @@ app.get('/authorize', (req, res) => {
     const { response_type, client_id, redirect_uri, state } = req.query;
 
     if (response_type !== 'code' || client_id !== CLIENT_ID) {
-        return res.status(400).json({ error: 'Invalid request' });
+      console.log('invalid request');
+      return res.status(400).json({ error: 'Invalid request' });
     }
 
     // Mock login (you can replace this with a proper login form)
