@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const SECRET_KEY = 'your_secret_key';
 const CLIENT_ID = 'your_client_id';
 const CLIENT_SECRET = 'your_client_secret';
-const REDIRECT_URI = 'https://abc.com';
+// const REDIRECT_URI = 'https://abc.com';
 
 // Mock user database and authorization codes
 const users = [{ username: 'user1', password: 'pass1' }];
@@ -20,7 +20,7 @@ const authCodes = new Map();
 app.get('/authorize', (req, res) => {
     const { response_type, client_id, redirect_uri, state } = req.query;
 
-    if (response_type !== 'code' || client_id !== CLIENT_ID || redirect_uri !== REDIRECT_URI) {
+    if (response_type !== 'code' || client_id !== CLIENT_ID) {
         return res.status(400).json({ error: 'Invalid request' });
     }
 
@@ -38,7 +38,7 @@ app.get('/authorize', (req, res) => {
 app.post('/token', (req, res) => {
     const { code, client_id, client_secret, redirect_uri, grant_type } = req.body;
 
-    if (grant_type !== 'authorization_code' || client_id !== CLIENT_ID || client_secret !== CLIENT_SECRET || redirect_uri !== REDIRECT_URI) {
+    if (grant_type !== 'authorization_code' || client_id !== CLIENT_ID || client_secret !== CLIENT_SECRET) {
         return res.status(400).json({ error: 'Invalid request' });
     }
 
