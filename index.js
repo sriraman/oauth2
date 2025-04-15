@@ -47,7 +47,7 @@ app.post('/token', (req, res) => {
     console.log('grant_type:', grant_type);
     console.log('req.body:', req.body);
 
-    if (grant_type !== 'authorization_code' || client_id !== CLIENT_ID || client_secret !== CLIENT_SECRET) {
+    if (grant_type !== 'authorization_code' || client_id !== CLIENT_ID) {
         return res.status(400).json({ error: 'Invalid request' });
     }
 
