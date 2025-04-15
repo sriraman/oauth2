@@ -70,6 +70,9 @@ const authenticateToken = (req, res, next) => {
     if (!token) return res.status(403).json({ error: 'No token provided' });
 
     jwt.verify(token, SECRET_KEY, (err, user) => {
+        console.log(token);
+        console.log(user);
+        console.log(err);
         if (err) return res.status(403).json({ error: 'Invalid token' });
         req.user = user;
         next();
@@ -78,6 +81,10 @@ const authenticateToken = (req, res, next) => {
 
 app.get('/protected', authenticateToken, (req, res) => {
     res.json({ message: 'This is a protected route', user: req.user });
+});
+
+app.get('/userinfo', (req, res) => {
+    res.json({ user });
 });
 
 // Start the server
