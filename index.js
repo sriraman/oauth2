@@ -13,7 +13,11 @@ const CLIENT_SECRET = 'your_client_secret';
 // const REDIRECT_URI = 'https://abc.com';
 
 // Mock user database and authorization codes
-const users = [{ username: 'user1', password: 'pass1' }];
+const user = {
+  username: 'testuser',
+  email: 'sriramancse@gmail.com',
+  name: 'Sriraman'
+};
 const authCodes = new Map();
 
 // Authorization endpoint
@@ -26,7 +30,7 @@ app.get('/authorize', (req, res) => {
     }
 
     const code = Math.random().toString(36).substring(7); // Generate auth code
-    authCodes.set(code, { username }); // Store auth code with user info
+    authCodes.set(code, user); // Store auth code with user info
 
     // Redirect to the client with the authorization code
     const redirectQuery = querystring.stringify({ code, state });
