@@ -25,10 +25,8 @@ app.get('/authorize', (req, res) => {
       return res.status(400).json({ error: 'Invalid request' });
     }
 
-    // Mock login (you can replace this with a proper login form)
-    const username = 'user1'; // Normally, you'd prompt the user to log in.
     const code = Math.random().toString(36).substring(7); // Generate auth code
-    authCodes.set(code, { username });
+    authCodes.set(code, { username }); // Store auth code with user info
 
     // Redirect to the client with the authorization code
     const redirectQuery = querystring.stringify({ code, state });
@@ -38,12 +36,18 @@ app.get('/authorize', (req, res) => {
 // Token endpoint
 app.post('/token', (req, res) => {
     const { code, client_id, client_secret, redirect_uri, grant_type } = req.body;
+    console.log('code:', code);
+    console.log('client_id:', client_id);
+    console.log('client_secret:', client_secret);
+    console.log('redirect_uri:', redirect_uri);
+    console.log('grant_type:', grant_type);
 
     if (grant_type !== 'authorization_code' || client_id !== CLIENT_ID || client_secret !== CLIENT_SECRET) {
         return res.status(400).json({ error: 'Invalid request' });
     }
 
     const authData = authCodes.get(code);
+    console.log(authData)
     if (!authData) {
         return res.status(400).json({ error: 'Invalid authorization code' });
     }
