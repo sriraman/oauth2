@@ -59,6 +59,7 @@ app.post('/token', (req, res) => {
 
     // Generate access token
     const token = jwt.sign(user, SECRET_KEY, { expiresIn: '1h' });
+    console.log('Generated token:', token);
     authCodes.delete(code); // Consume the auth code
     res.json({ access_token: token, token_type: 'Bearer', expires_in: 3600 });
 });
